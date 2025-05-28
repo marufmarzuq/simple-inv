@@ -1,8 +1,7 @@
-module com.example.simpleinv {
+module com.inventory {
     requires javafx.controls;
     requires javafx.fxml;
 
-
-    opens com.example.simpleinv to javafx.fxml;
-    exports com.example.simpleinv;
+    opens com.inventory to javafx.fxml, javafx.graphics;
+    exports com.inventory;
 }

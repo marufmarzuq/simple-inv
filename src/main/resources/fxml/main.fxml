@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+
+<TabPane prefHeight="725.0" prefWidth="1026.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+    <tabs>
+        <Tab text="Product Setup">
+            <content>
+                <fx:include source="product_view.fxml" />
+            </content>
+        </Tab>
+        <Tab text="Stock In/Out">
+         <content>
+                <fx:include source="stock_view.fxml" />
+         </content>
+      </Tab>
+        <Tab text="Reports">
+         <content>
+                <fx:include source="report_view.fxml" />
+         </content>
+      </Tab>
+    </tabs>
+</TabPane>
