@@ -73,4 +73,15 @@ public class ReportController {
 
         refreshTable(null, null);
     }
+
+    @FXML
+    private void handleRefresh() {
+        if(fromDateField.getValue() == null || toDateField.getValue() == null) {
+            refreshTable(null, null);
+        } else {
+            String fromDate = fromDateField.getValue().toString();
+            String toDate = toDateField.getValue().toString();
+            refreshTable(fromDate, toDate);
+        }
+    }
 }

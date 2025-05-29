@@ -31,10 +31,22 @@ public class ProductDAO {
     }
 
     public static void deleteProduct(int id) throws Exception {
-        String sql = "DELETE FROM products WHERE id=?";
-        try (Connection conn = DatabaseConnection.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+        String prod_sql = "DELETE FROM products WHERE id=?";
+        String stock_sql = "DELETE FROM stock WHERE product_id=?";
+        String stock_log_sql = "DELETE FROM stock_log WHERE product_id=?";
+        try (Connection conn = DatabaseConnection.getConnection(); PreparedStatement stmt = conn.prepareStatement(prod_sql)) {
             stmt.setInt(1, id);
             stmt.executeUpdate();
+        } finally {
+            try (Connection conn = DatabaseConnection.getConnection(); PreparedStatement stmt = conn.prepareStatement(stock_sql)) {
+                stmt.setInt(1, id);
+                stmt.executeUpdate();
+            } finally {
+                try (Connection conn = DatabaseConnection.getConnection(); PreparedStatement stmt = conn.prepareStatement(stock_log_sql)) {
+                    stmt.setInt(1, id);
+                    stmt.executeUpdate();
+                }
+            }
         }
     }
 
