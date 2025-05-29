@@ -1,13 +1,10 @@
 package com.inventory.database;
 
-import com.inventory.model.Product;
 import com.inventory.model.Stock;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class StockDAO {
 

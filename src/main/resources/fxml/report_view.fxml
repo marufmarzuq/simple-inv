@@ -1,10 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="725.0" prefWidth="1026.0" xmlns="http://javafx.com/javafx/17.0.6" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.inventory.controller.ReportController">
+<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="725.0" prefWidth="1026.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.inventory.controller.ReportController">
     <children>
         <GridPane prefHeight="693.5" prefWidth="1026.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <columnConstraints>
@@ -17,26 +24,31 @@
             <children>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" GridPane.rowIndex="1">
                     <children>
-                        <TableView layoutY="14.0" prefHeight="693.0" prefWidth="508.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <TableView fx:id="reportTable" layoutY="14.0" prefHeight="693.0" prefWidth="508.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                             <columns>
-                                <TableColumn prefWidth="97.0" text="Id" />
-                                <TableColumn prefWidth="236.0" text="Product Type" />
-                                <TableColumn prefWidth="264.0" text="Action (In/Out)" />
-                                <TableColumn minWidth="0.0" prefWidth="211.0" text="Quantity" />
-                                <TableColumn prefWidth="216.0" text="Date" />
+                                <TableColumn fx:id="dateColumn" maxWidth="255.0" prefWidth="177.0" text="Date" />
+                                <TableColumn fx:id="nameColumn" prefWidth="224.0" text="Product  Name" />
+                                <TableColumn fx:id="categoryColumn" prefWidth="184.0" text="Category" />
+                                <TableColumn fx:id="actionTypeColumn" prefWidth="251.0" text="Action Type (In/Out)" />
+                                <TableColumn fx:id="quantityColumn" maxWidth="194.0" minWidth="0.0" prefWidth="172.0" text="Quantity" />
                             </columns>
                         </TableView>
                     </children>
                 </AnchorPane>
                 <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
                     <children>
-                        <DatePicker promptText="From Date" />
-                        <DatePicker promptText="To Date" />
-                        <Button mnemonicParsing="false" text="Filter">
+                        <DatePicker fx:id="fromDateField" promptText="From Date" />
+                        <DatePicker fx:id="toDateField" promptText="To Date" />
+                        <Button fx:id="filterBtn" disable="true" mnemonicParsing="false" onAction="#handleFilter" text="Filter">
                             <padding>
                                 <Insets bottom="5.0" left="20.0" right="20.0" top="5.0" />
                             </padding>
                         </Button>
+                  <Button fx:id="resetBtn" disable="true" layoutX="421.0" layoutY="45.0" mnemonicParsing="false" onAction="#handleReset" text="Reset">
+                     <padding>
+                        <Insets bottom="5.0" left="20.0" right="20.0" top="5.0" />
+                     </padding>
+                  </Button>
                     </children>
                     <padding>
                         <Insets left="20.0" />
