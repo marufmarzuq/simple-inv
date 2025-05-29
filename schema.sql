@@ -29,3 +29,13 @@ CREATE TABLE IF NOT EXISTS stock_log (
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE
 );
+
+-- test products
+INSERT INTO products (name, category, description, unit_price) VALUES
+    ('Laptop', 'Electronics', 'Gaming Laptop', 1500.00),
+    ('Notebook', 'Stationery', '200 pages ruled', 1.50),
+    ('Pen', 'Stationery', 'Blue ink ballpoint', 0.50),
+    ('Chair', 'Furniture', 'Office chair with cushion', 45.00),
+    ('Table', 'Furniture', 'Wooden office table', 80.00);
+
+select * from products;
