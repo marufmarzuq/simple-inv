@@ -15,13 +15,18 @@ public class Product {
         this.unitPrice = unitPrice;
     }
 
+    public Product(int id, String name, String category) {
+        this.id = id;
+        this.name = name;
+        this.category = category;
+    }
+
     public Product(String name, String category, String description, double unitPrice) {
         this(-1, name, category, description, unitPrice);
     }
 
     // Getters and setters
     public int getId() { return id; }
-    public void setId(int id) { this.id = id; }
 
     public String getName() { return name; }
     public String getCategory() { return category; }

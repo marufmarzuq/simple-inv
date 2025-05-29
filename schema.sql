@@ -38,4 +38,9 @@ INSERT INTO products (name, category, description, unit_price) VALUES
     ('Chair', 'Furniture', 'Office chair with cushion', 45.00),
     ('Table', 'Furniture', 'Wooden office table', 80.00);
 
+
+show tables;
+
 select * from products;
+select * from stock_log;
+select * from stock;

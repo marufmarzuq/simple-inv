@@ -65,18 +65,20 @@ public class ProductController {
 
         nameField.textProperty().addListener((obs, oldVal, newVal) -> validateForm());
         categoryField.valueProperty().addListener((obs, oldVal, newVal) -> validateForm());
-        unitPriceField.textProperty().addListener((obs, oldVal, newVal) -> validateForm());
 
-        unitPriceField.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue.matches("\\d*(\\.\\d*)?")) {
-                unitPriceField.setText(oldValue);
+        unitPriceField.textProperty().addListener((obs, oldVal, newVal) -> {
+            if (!newVal.matches("\\d*(\\.\\d*)?")) {
+                unitPriceField.setText(oldVal);
+            } else {
+                validateForm();
             }
         });
 
-        idColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getId()).asObject());
-        nameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getName()));
-        categoryColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCategory()));
-        unitPriceColumn.setCellValueFactory(cellData -> new SimpleDoubleProperty(cellData.getValue().getUnitPrice()).asObject());
+
+        idColumn.setCellValueFactory(d -> new SimpleIntegerProperty(d.getValue().getId()).asObject());
+        nameColumn.setCellValueFactory(d -> new SimpleStringProperty(d.getValue().getName()));
+        categoryColumn.setCellValueFactory(d -> new SimpleStringProperty(d.getValue().getCategory()));
+        unitPriceColumn.setCellValueFactory(d -> new SimpleDoubleProperty(d.getValue().getUnitPrice()).asObject());
 
         actionColumn.setCellFactory(col -> new TableCell<>() {
             private final Button editButton = new Button("Edit");
@@ -125,7 +127,7 @@ public class ProductController {
         String description = descriptionField.getText();
         double price = Double.parseDouble(unitPriceField.getText());
 
-        System.out.println(name + " " + category + " " + description + " " + price);
+        System.out.println(name + " | " + category + " | " + description + " | " + price);
 
         if (selectedProduct == null) {
             Product newProduct = new Product(name, category, description, price);

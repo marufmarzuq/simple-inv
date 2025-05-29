@@ -1,22 +1,27 @@
 package com.inventory.database;
 
+import com.inventory.model.Product;
+import com.inventory.model.Stock;
+
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class StockDAO {
 
-    public static void stockInOut(int productId, int qty, String action) throws Exception {
+    public static void stockInOut(String action, int productId, int qty) throws Exception {
         Connection conn = DatabaseConnection.getConnection();
         conn.setAutoCommit(false);
 
         try {
-            // Insert into stock_logs
-            String logSql = "INSERT INTO stock_logs (product_id, quantity, action, date_time) VALUES (?, ?, ?, NOW())";
+            // Insert into stock_log
+            String logSql = "INSERT INTO stock_log (product_id, action_type, quantity, created_at) VALUES (?, ?, ?, NOW())";
             try (PreparedStatement logStmt = conn.prepareStatement(logSql)) {
                 logStmt.setInt(1, productId);
-                logStmt.setInt(2, qty);
-                logStmt.setString(3, action);
+                logStmt.setString(2, action);
+                    logStmt.setInt(3, qty);
                 logStmt.executeUpdate();
             }
 
@@ -27,17 +32,17 @@ public class StockDAO {
                 ResultSet rs = checkStmt.executeQuery();
 
                 if (rs.next()) {
-                    int current = rs.getInt("quantity");
-                    int newQty = action.equals("in") ? current + qty : current - qty;
+                    int current = rs.getInt("current_stock");
+                    int newQty = action.equals("In") ? current + qty : current - qty;
                     if (newQty < 0) newQty = 0;
-                    String updateSql = "UPDATE stock SET quantity=? WHERE product_id=?";
+                    String updateSql = "UPDATE stock SET current_stock=? WHERE product_id=?";
                     try (PreparedStatement updateStmt = conn.prepareStatement(updateSql)) {
                         updateStmt.setInt(1, newQty);
                         updateStmt.setInt(2, productId);
                         updateStmt.executeUpdate();
                     }
                 } else {
-                    String insertSql = "INSERT INTO stock (product_id, quantity) VALUES (?, ?)";
+                    String insertSql = "INSERT INTO stock (product_id, current_stock) VALUES (?, ?)";
                     try (PreparedStatement insertStmt = conn.prepareStatement(insertSql)) {
                         insertStmt.setInt(1, productId);
                         insertStmt.setInt(2, qty);
@@ -56,14 +61,22 @@ public class StockDAO {
         }
     }
 
-    public static Map<Integer, Integer> getAllStock() throws Exception {
-        Map<Integer, Integer> stockMap = new HashMap<>();
-        String sql = "SELECT * FROM stock";
+    public static List<Stock> getProductsWithStocks() throws Exception {
+        List<Stock> list = new ArrayList<>();
+        String sql = "SELECT id, name, category, unit_price, stock.current_stock as current_stock FROM products LEFT JOIN stock ON products.id = stock.product_id";
         try (Connection conn = DatabaseConnection.getConnection(); Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {
-                stockMap.put(rs.getInt("product_id"), rs.getInt("quantity"));
+                Stock p = new Stock(
+                        rs.getInt("id"),
+                        rs.getString("name"),
+                        rs.getString("category"),
+                        rs.getDouble("unit_price"),
+                        rs.getInt("current_stock")
+                );
+                list.add(p);
             }
         }
-        return stockMap;
+        System.out.println();
+        return list;
     }
 }

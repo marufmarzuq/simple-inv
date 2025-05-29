@@ -8,5 +8,5 @@ module com.inventory {
     opens com.inventory.model to javafx.fxml;
 
     exports com.inventory;
-    exports com.inventory.controller; // 👈 ADD THIS
+    exports com.inventory.controller;
 }
